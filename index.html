@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Necotistan President Login Page</title>
   <style>
     body {
@@ -54,7 +56,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="mainContainer">
     <h2>Necotistan Admin Panel</h2>
     <form id="loginForm">
       <div class="form-group">
@@ -72,19 +74,43 @@
   </div>
 
   <script>
-      function validateLogin() {
+    function validateLogin() {
       var username = document.getElementById('username').value;
       var password = document.getElementById('password').value;
 
-       if (username === 'Necoti' && password === 'NecotistanBestCountry') {
-        alert('Login successful! Redirecting...');
+      // Basit bir doğrulama yapın
+      if (username === 'admin' && password === 'admin123') {
+        alert('Login successful! Changing page content...');
 
-        window.location.href = 'datapage.html';
+        // Sayfa içeriğini değiştirme
+        changePageContent();
       } else {
         alert('Invalid username or password. Please try again.');
       }
     }
-  </script>
 
+    function changePageContent() {
+      // Ana konteyneri al
+      var mainContainer = document.getElementById('mainContainer');
+
+      // Yeni içeriği oluştur
+      var newContent = document.createElement('div');
+      newContent.innerHTML = `
+        <h2>Welcome to the Admin Dashboard!</h2>
+        <p>This is the content of the Necotistan citizen save system.</p>
+        <h3>Add New Citizen</h3>
+        <input type="Name" class="textbox" placeholder="Write new citizen's name">
+        <input type="Surname" class="textbox" placeholder="Write new citizen's surname">
+        <input type="ID Number" class="textbox" placeholder="Write new citizen's ID number">
+        <button class="button">Save ID</button>
+      `;
+
+      // Eski içeriği temizle
+      mainContainer.innerHTML = '';
+
+      // Yeni içeriği ekle
+      mainContainer.appendChild(newContent);
+    }
+  </script>
 </body>
 </html>
