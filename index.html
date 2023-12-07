@@ -1,60 +1,86 @@
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyASRaPgOdO_t55k3EO2PxT8rU8QQClpXhw",
+    authDomain: "necotistan-datas.firebaseapp.com",
+    projectId: "necotistan-datas",
+    storageBucket: "necotistan-datas.appspot.com",
+    messagingSenderId: "419018423073",
+    appId: "1:419018423073:web:8c5da7f326b8a2c0909c60",
+    measurementId: "G-XNZFY1M3BN"
+};
+
+  firebase.initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  var db = firebase.firestore();
+</script>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Necotistan President Login Page</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #303030;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #303030;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
 
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #686868;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #686868;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
 
-    h2 {
-      text-align: center;
-    }
+  h2 {
+    text-align: center;
+    color: #4CAF50;
+  }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+  .form-group {
+    margin-bottom: 20px;
+  }
 
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
 
-    .form-group input {
-      width: 97%;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
+  .form-group input {
+    width: 97%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
 
-    .form-group button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+  .form-group button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
 
-    .form-group button:hover {
-      background-color: #45a049;
-    }
-  </style>
+  .form-group button:hover {
+    background-color: #45a049;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="mainContainer">
     <h2>Necotistan Admin Panel</h2>
     <form id="loginForm">
       <div class="form-group">
@@ -72,19 +98,55 @@
   </div>
 
   <script>
-      function validateLogin() {
+    function validateLogin() {
       var username = document.getElementById('username').value;
       var password = document.getElementById('password').value;
 
-       if (username === 'Necoti' && password === 'NecotistanBestCountry') {
-        alert('Login successful! Redirecting...');
+      if (username === 'admin' && password === 'admin123') {
+        alert('Login successful! Directing to panel...');
 
-        window.location.href = 'datapage.html';
+        changePageContent();
       } else {
         alert('Invalid username or password. Please try again.');
       }
     }
-  </script>
 
+    function changePageContent() {
+      var mainContainer = document.getElementById('mainContainer');
+
+      var newContent = document.createElement('div');
+      newContent.innerHTML = `
+        <h2>Welcome to the Admin Dashboard!</h2>
+        <p>This is the content of the Necotistan citizen save system.</p>
+        <h3>Add New Citizen</h3>
+        <input type="text" id="citizenName" class="textbox" placeholder="Write new citizen's name">
+        <input type="text" id="citizenSurname" class="textbox" placeholder="Write new citizen's surname">
+        <input type="text" id="citizenID" class="textbox" placeholder="Write new citizen's ID number">
+        <button class="button" onclick="saveCitizen(alert('New citizen saved successfully...'))">Save ID</button>
+      `;
+
+      mainContainer.innerHTML = '';
+
+      mainContainer.appendChild(newContent);
+    }
+
+    function saveCitizen() {
+      var name = document.getElementById('name').value;
+      var surname = document.getElementById('surname').value;
+      var idNumber = document.getElementById('idNumber').value;
+
+      db.collection("citizens").add({
+        name: name,
+        surname: surname,
+        idNumber: idNumber
+      })
+      .then(function(docRef) {
+        alert("Citizen saved with ID: " + docRef.id);
+      })
+      .catch(function(error) {
+        console.error("Error adding citizen: ", error);
+      });
+    }
+  </script>
 </body>
 </html>
