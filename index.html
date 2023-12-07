@@ -17,12 +17,6 @@
       messagingSenderId: "419018423073",
       appId: "1:419018423073:web:8c5da7f326b8a2c0909c60",
     };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-
-        // Get a reference to the Firestore database
-        const db = getFirestore(app);
     </script>
   <style>
 
@@ -99,6 +93,15 @@
   </div>
 
   <script>
+    // Declare db globally
+    let db;
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Get a reference to the Firestore database
+    db = getFirestore(app);
+
     function validateLogin() {
       var username = document.getElementById('username').value;
       var password = document.getElementById('password').value;
