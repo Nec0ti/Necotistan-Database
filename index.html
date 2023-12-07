@@ -140,9 +140,9 @@
     }
 
     function saveCitizen() {
-      var name = document.getElementById('citizenName').value;
-      var surname = document.getElementById('citizenSurname').value;
-      var idNumber = document.getElementById('citizenID').value;
+      var name = document.getElementById('name').value;
+      var surname = document.getElementById('surname').value;
+      var idNumber = document.getElementById('idNumber').value;
 
       // "citizens" koleksiyonuna yeni bir belge ekleyin
       db.collection("citizens").add({
