@@ -1,3 +1,26 @@
+<!-- Firebase SDK ekleyin -->
+<script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"></script>
+
+<!-- Firebase yapılandırma bilgilerinizi ekleyin -->
+<script>
+  var firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // Firebase'i başlatın
+  firebase.initializeApp(firebaseConfig);
+
+  // Firestore bağlantısını al
+  var db = firebase.firestore();
+</script>
+
+<!-- Geri kalan HTML kodu -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,54 +28,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Necotistan President Login Page</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #303030;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #686868;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .form-group input {
-      width: 97%;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-
-    .form-group button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-
-    .form-group button:hover {
-      background-color: #45a049;
-    }
+    /* Diğer stil tanımları */
   </style>
 </head>
 <body>
@@ -99,10 +75,10 @@
         <h2>Welcome to the Admin Dashboard!</h2>
         <p>This is the content of the Necotistan citizen save system.</p>
         <h3>Add New Citizen</h3>
-        <input type="Name" class="textbox" placeholder="Write new citizen's name">
-        <input type="Surname" class="textbox" placeholder="Write new citizen's surname">
-        <input type="ID Number" class="textbox" placeholder="Write new citizen's ID number">
-        <button class="button">Save ID</button>
+        <input type="text" id="citizenName" class="textbox" placeholder="Write new citizen's name">
+        <input type="text" id="citizenSurname" class="textbox" placeholder="Write new citizen's surname">
+        <input type="text" id="citizenID" class="textbox" placeholder="Write new citizen's ID number">
+        <button class="button" onclick="saveCitizen()">Save ID</button>
       `;
 
       // Eski içeriği temizle
@@ -110,6 +86,25 @@
 
       // Yeni içeriği ekle
       mainContainer.appendChild(newContent);
+    }
+
+    function saveCitizen() {
+      var name = document.getElementById('citizenName').value;
+      var surname = document.getElementById('citizenSurname').value;
+      var idNumber = document.getElementById('citizenID').value;
+
+      // "citizens" koleksiyonuna yeni bir belge ekleyin
+      db.collection("citizens").add({
+        name: name,
+        surname: surname,
+        idNumber: idNumber
+      })
+      .then(function(docRef) {
+        alert("Citizen saved with ID: " + docRef.id);
+      })
+      .catch(function(error) {
+        console.error("Error adding citizen: ", error);
+      });
     }
   </script>
 </body>
