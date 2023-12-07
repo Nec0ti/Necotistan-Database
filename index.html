@@ -4,10 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Necotistan President Login Page</title>
-  <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js">
-  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    var firebaseConfig = {
+      apiKey: "AIzaSyASRaPgOdO_t55k3EO2PxT8rU8QQClpXhw",
+      authDomain: "necotistan-datas.firebaseapp.com",
+      projectId: "necotistan-datas",
+      storageBucket: "necotistan-datas.appspot.com",
+      messagingSenderId: "419018423073",
+      appId: "1:419018423073:web:8c5da7f326b8a2c0909c60",
+    };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Get a reference to the Firestore database
+        const db = getFirestore(app);
+    </script>
   <style>
+
   body {
     font-family: Arial, sans-serif;
     background-color: #303030;
@@ -81,19 +99,6 @@
   </div>
 
   <script>
-    var firebaseConfig = {
-      apiKey: "AIzaSyASRaPgOdO_t55k3EO2PxT8rU8QQClpXhw",
-      authDomain: "necotistan-datas.firebaseapp.com",
-      projectId: "necotistan-datas",
-      storageBucket: "necotistan-datas.appspot.com",
-      messagingSenderId: "419018423073",
-      appId: "1:419018423073:web:8c5da7f326b8a2c0909c60",
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    var db = firebase.firestore();
-
     function validateLogin() {
       var username = document.getElementById('username').value;
       var password = document.getElementById('password').value;
@@ -127,21 +132,22 @@
     }
 
     function saveCitizen(callback) {
-      var citizenName = document.getElementById('citizenName').value;
-      var citizenSurname = document.getElementById('citizenSurname').value;
-      var citizenID = document.getElementById('citizenID').value;
+        var citizenName = document.getElementById('citizenName').value;
+        var citizenSurname = document.getElementById('citizenSurname').value;
+        var citizenID = document.getElementById('citizenID').value;
 
-      db.collection("citizens").add({
-        name: citizenName,
-        surname: citizenSurname,
-        citizenid: citizenID
-      })
-      .then(function(docRef) {
-        callback();
-      })
-      .catch(function(error) {
-        console.error("Error adding document: ", error);
-      });
+        // Add the citizen to the "citizens" collection
+        db.collection("citizens").add({
+                name: citizenName,
+                surname: citizenSurname,
+                citizenid: citizenID
+            })
+            .then(function (docRef) {
+                callback(); // Execute the callback after successfully saving the citizen
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
     }
   </script>
 </body>
