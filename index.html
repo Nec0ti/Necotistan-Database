@@ -22,7 +22,7 @@
         const app = initializeApp(firebaseConfig);
 
         // Get a reference to the Firestore database
-        const db = getFirestore(app);
+        window.db = getFirestore(app);
     </script>
   <style>
 
@@ -137,7 +137,7 @@
         var citizenID = document.getElementById('citizenID').value;
 
         // Add the citizen to the "citizens" collection
-        db.collection("citizens").add({
+        window.db.collection("citizens").add({
                 name: citizenName,
                 surname: citizenSurname,
                 citizenid: citizenID
