@@ -83,9 +83,17 @@
     document.addEventListener('DOMContentLoaded', function() {
       function initializeFirebase() {
         var firebaseConfig = {
-          apiKey: "AIzaSyASRaPgOdO_t55k3EO2PxT8rU8QQClpXhw",
-          authDomain: "necotistan-datas.firebaseapp.com",
-          projectId: "necotistan-datas",
+                    apiKey:  "AIzaSyASRaPgOdO_t55k3EO2PxT8rU8QQClpXhw"
+                  };
+                  // Initialize Firebase
+                  firebase.initializeApp(firebaseConfig);
+                  firebase.analytics();
+                }
+                initializeFirebase();
+              });
+            </script>
+          </body>
+          </html>
           storageBucket: "necotistan-datas.appspot.com",
           messagingSenderId: "419018423073",
           appId: "1:419018423073:web:8c5da7f326b8a2c0909c60",
@@ -120,7 +128,7 @@
             <input type="text" id="citizenName" class="textbox" placeholder="Write new citizen's name">
             <input type="text" id="citizenSurname" class="textbox" placeholder="Write new citizen's surname">
             <input type="text" id="citizenID" class="textbox" placeholder="Write new citizen's ID number">
-            <button class="button" onclick="saveCitizen(alert('New citizen saved successfully...'))">Save ID</button>
+            <button class="button" onclick="saveCitizen()">Save ID</button>
           `;
 
           mainContainer.innerHTML = '';
@@ -155,6 +163,7 @@
           initializeFirebase();
         };
       }
+      initializeFirebase();
     });
   </script>
 </body>
