@@ -4,29 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Necotistan Governance Page</title>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    var firebaseConfig = {
-      apiKey: "AIzaSyASRaPgOdO_t55k3EO2PxT8rU8QQClpXhw",
-      authDomain: "necotistan-datas.firebaseapp.com",
-      projectId: "necotistan-datas",
-      storageBucket: "necotistan-datas.appspot.com",
-      messagingSenderId: "419018423073",
-      appId: "1:419018423073:web:8c5da7f326b8a2c0909c60",
-    };
-
-      // Declare db globally
-      let db;
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-
-      // Get a reference to the Firestore database
-      db = getFirestore(app);
-    </script>
   <style>
 
   body {
@@ -134,24 +111,28 @@
       mainContainer.appendChild(newContent);
     }
 
-    function saveCitizen(callback) {
-        var citizenName = document.getElementById('citizenName').value;
-        var citizenSurname = document.getElementById('citizenSurname').value;
-        var citizenID = document.getElementById('citizenID').value;
+    function saveCitizen() {
+    var citizenName = document.getElementById('citizenName').value;
+    var citizenSurname = document.getElementById('citizenSurname').value;
+    var citizenID = document.getElementById('citizenID').value;
 
-        // Add the citizen to the "citizens" collection
-        db.collection("citizens").add({
-                name: citizenName,
-                surname: citizenSurname,
-                citizenid: citizenID
-            })
-            .then(function (docRef) {
-                callback(); // Execute the callback after successfully saving the citizen
-            })
-            .catch(function (error) {
-                console.error("Error adding document: ", error);
-            });
-    }
+    var data = `Name: ${citizenName}\nSurname: ${citizenSurname}\nID: ${citizenID}`;
+
+    var blob = new Blob([data], { type: 'text/plain' });
+
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    
+    link.download = `${citizenID}.txt`;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    alert('New citizen saved successfully...');
+  }
   </script>
 </body>
 </html>
