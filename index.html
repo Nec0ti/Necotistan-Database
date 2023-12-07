@@ -5,62 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Necotistan President Login Page</title>
   <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js">
+  </script>
   <style>
-    body {
+  body {
     font-family: Arial, sans-serif;
     background-color: #303030;
     color: #fff;
     margin: 0;
     padding: 0;
-    }
+  }
 
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #686868;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #686868;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
 
-    h2 {
-      text-align: center;
-      color: #4CAF50;
-    }
+  h2 {
+    text-align: center;
+    color: #4CAF50;
+  }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+  .form-group {
+    margin-bottom: 20px;
+  }
 
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
 
-    .form-group input {
-      width: 97%;
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
+  .form-group input {
+    width: 97%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
 
-    .form-group button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+  .form-group button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
 
-    .form-group button:hover {
-      background-color: #45a049;
-    }
-  </style>
+  .form-group button:hover {
+    background-color: #45a049;
+  }
+</style>
 </head>
 <body>
   <div class="container" id="mainContainer">
@@ -95,9 +95,35 @@
     var db = firebase.firestore();
 
     function validateLogin() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      if (username === 'admin' && password === 'admin123') {
+        alert('Login successful! Directing to panel...');
+
+        changePageContent();
+      } else {
+        alert('Invalid username or password. Please try again.');
+      }
     }
 
     function changePageContent() {
+      var mainContainer = document.getElementById('mainContainer');
+
+      var newContent = document.createElement('div');
+      newContent.innerHTML = `
+        <h2>Welcome to the Admin Dashboard!</h2>
+        <p>This is the content of the Necotistan citizen save system.</p>
+        <h3>Add New Citizen</h3>
+        <input type="text" id="citizenName" class="textbox" placeholder="Write new citizen's name">
+        <input type="text" id="citizenSurname" class="textbox" placeholder="Write new citizen's surname">
+        <input type="text" id="citizenID" class="textbox" placeholder="Write new citizen's ID number">
+        <button class="button" onclick="saveCitizen(alert('New citizen saved successfully...'))">Save ID</button>
+      `;
+
+      mainContainer.innerHTML = '';
+
+      mainContainer.appendChild(newContent);
     }
 
     function saveCitizen(callback) {
